@@ -11,21 +11,43 @@ Window {
     visible: true
     title: qsTr("Crop tool")
 
-    property string pathToFile: ""
+    property double zoomFactor: 1.0
 
-    Image {
-        id: image
-        source: pathToFile
+    property string pathToFile: ""
+    Flickable {
+        id:flickArea
         anchors.fill: parent
+        contentWidth: Math.max(image.width * zoomFactor, flickArea.width)
+        contentHeight: Math.max(image.height * zoomFactor, flickArea.height)
+
+        Image {
+            id: image
+            source: pathToFile
+            scale: zoomFactor
+            anchors.centerIn: parent
+            transformOrigin: Item.Center
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onWheel: (wheel) => {
+                if (wheel.modifiers & Qt.ControlModifier) {
+                    zoomFactor += wheel.angleDelta.y / 1200
+                }
+            }
+        }
     }
 
+
     BottomPanel {
+        id: bottomPanel
         z: 10
         anchors {
                   bottom: parent.bottom
                   left: parent.left
                   right: parent.right
         }
+        visible:false
 
         Button {
             anchors {
@@ -37,9 +59,20 @@ Window {
                 fileDialog.open()
             }
 
-            contentItem: Label {
-                text: "Load image"
-            }
+            text: "Load image"
+        }
+    }
+
+    Button {
+        id: openBottomPanelButton
+        text: "Open Panel"
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+        visible: !bottomPanel.visible
+        onClicked: {
+            bottomPanel.visible = true
         }
     }
 

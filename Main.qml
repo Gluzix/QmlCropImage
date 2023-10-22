@@ -11,33 +11,11 @@ Window {
     visible: true
     title: qsTr("Crop tool")
 
-    property double zoomFactor: 1.0
-
     property string pathToFile: ""
-    Flickable {
-        id:flickArea
-        anchors.fill: parent
-        contentWidth: Math.max(image.width * zoomFactor, flickArea.width)
-        contentHeight: Math.max(image.height * zoomFactor, flickArea.height)
 
-        Image {
-            id: image
-            source: pathToFile
-            scale: zoomFactor
-            anchors.centerIn: parent
-            transformOrigin: Item.Center
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onWheel: (wheel) => {
-                if (wheel.modifiers & Qt.ControlModifier) {
-                    zoomFactor += wheel.angleDelta.y / 1200
-                }
-            }
-        }
+    SelectableArea {
+        id: selectableArea
     }
-
 
     BottomPanel {
         id: bottomPanel
@@ -98,4 +76,5 @@ Window {
             urlLabel.text = "Rejected"
         }
     }
+
 }

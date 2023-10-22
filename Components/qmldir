@@ -1,2 +1,3 @@
 module Components
 BottomPanel 1.0 BottomPanel.qml
+SelectableArea 1.0 SelectableArea.qml

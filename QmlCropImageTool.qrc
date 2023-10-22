@@ -2,5 +2,6 @@
     <qresource prefix="/qt/qml">
         <file>Components/BottomPanel.qml</file>
         <file>Components/qmldir</file>
+        <file>Components/SelectableArea.qml</file>
     </qresource>
 </RCC>

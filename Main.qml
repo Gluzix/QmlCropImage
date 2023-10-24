@@ -4,14 +4,13 @@ import QtQuick.Window
 import QtQuick.Dialogs
 import QtQuick.Controls
 import Components 1.0
+import Qt.cropTool.cropHandlerSingleton 1.0
 
 Window {
     width: 640
     height: 480
     visible: true
     title: qsTr("Crop tool")
-
-    property string pathToFile: ""
 
     SelectableArea {
         id: selectableArea
@@ -54,26 +53,13 @@ Window {
         }
     }
 
-    Label {
-        id: urlLabel
-        width: 200
-        height: 30
-        visible:true
-        text: "test label"
-        color: "#000000"
-    }
-
-
     FileDialog {
         id: fileDialog
         title: "please choose a file"
         currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         onAccepted: {
-            pathToFile = selectedFile
-            urlLabel.text = pathToFile
-        }
-        onRejected: {
-            urlLabel.text = "Rejected"
+            CropHandler.openNewImage(selectedFile)
+            console.log(currentFile);
         }
     }
 

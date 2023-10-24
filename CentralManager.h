@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <CropHandler.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -14,5 +15,6 @@ public:
 private:
     const QString mMainQMLPath = u"qrc:/QmlCropImageTool/Main.qml"_s;
     QQmlApplicationEngine mEngine;
+    CropHandler mCropHandler;
 };
 

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Dialogs
 import QtQuick.Controls
 import QtCore
+import Qt.cropTool.cropHandlerSingleton 1.0
 
 Flickable {
     id:flickArea
@@ -15,7 +16,7 @@ Flickable {
 
     Image {
         id: image
-        source: pathToFile
+        source: CropHandler.originalImageUrl
         scale: zoomFactor
         anchors.centerIn: parent
         transformOrigin: Item.Center
@@ -60,6 +61,28 @@ Flickable {
                 markRectangleMouseMovedY(mappedPoint.y);
             }
         }
+        onReleased: (mouse) => {
+            if (mouse.button === Qt.RightButton) {
+                saveWindow.visible = true
+                saveWindow.x = mouseX
+                saveWindow.y = mouseY
+            }
+        }
+    }
+
+    Item {
+        id: saveWindow
+        implicitHeight: 30
+        implicitWidth: 100
+        visible: false
+
+        Button {
+            anchors.fill: parent
+            text: "Save?"
+            onClicked: {
+                CropHandler.cropImage(Qt.rect(markRectangle.x, markRectangle.y, markRectangle.width, markRectangle.height))
+            }
+        }
     }
 
     function markRectangleMousePressed(mouseX, mouseY) {
@@ -84,4 +107,5 @@ Flickable {
         }
         markRectangle.height = Math.abs(difference)
     }
+
 }

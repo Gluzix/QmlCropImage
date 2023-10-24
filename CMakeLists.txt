@@ -4,7 +4,7 @@ project(QmlCropImageTool VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Widgets)
 
 qt_standard_project_setup()
 
@@ -15,6 +15,8 @@ qt_add_resources(RC_SRC
 qt_add_executable(appQmlCropImageTool
     main.cpp
     CentralManager.cpp
+    CropHandler.cpp
+    CropHandler.h
     ${RC_SRC}
 )
 
@@ -38,6 +40,7 @@ set_target_properties(appQmlCropImageTool PROPERTIES
 
 target_link_libraries(appQmlCropImageTool
     PRIVATE Qt6::Quick
+    PRIVATE Qt6::Widgets
 )
 
 include(GNUInstallDirs)
